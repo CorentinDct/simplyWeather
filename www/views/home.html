@@ -1,0 +1,30 @@
+<section ng-controller="WeatherCtrl">
+	<section class="panel searchPanel" ng-class="{center: panel == 0, left: panel>0}">
+		<p>Bienvenue :)</p>
+		<form ng-submit="search()">
+			<p>
+				<input class="text" type="text" placeholder="choisir une ville" ng-model="city">
+			</p>
+			<p>
+				<input type="submit" class="submit" value="Rechercher">
+			</p>
+			<p>
+				<a class="btn" ng-click="geolocate()">Utiliser ma localisation</a>
+			</p>
+		</form>
+	</section>
+	<section class="panel right" ng-class="{center: panel == 1, right: panel<1}">
+		<div class="row-title">
+			<a class="fa fa-chevron-left back" ng-hide="panel == 0" ng-click="panel=0"></a>
+
+			<div class="loader" ng-show="loader"></div>
+			{{weather.city.name}}/{{weather.city.country}}
+		</div>
+		<div class="row card" ng-class="{card_active: $index == 0}" ng-repeat="t in weather.list" ng-click="expand($event)">
+			<i class="wi {{t.weather[0].main.toLowerCase()}}"></i>
+			{{t.dt*1000 | date:'EEE'}}
+			{{t.dt*1000 | date:'dd/MM'}}
+			{{Math.round(t.temp.day)}}°C
+		</div>
+	</section>
+</section>
